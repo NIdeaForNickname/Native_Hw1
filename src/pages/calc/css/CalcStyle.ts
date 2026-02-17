@@ -37,7 +37,19 @@ const CalcStyle = StyleSheet.create({
     },
     memoryButton: {
         color: "#bbb",
-    }
+    },
+    // Landscape
+    containerResExpMem: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    containerExpMem: {
+        flex: 2,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+    },
 });
 
 export default CalcStyle;
