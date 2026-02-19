@@ -13,6 +13,7 @@ export default function CalcButton({data}: { data: ICalcButtonData }) {
         }}
         style={[
             styles.calcButton,
+            // @ts-ignore
             buttonTypeStyles[data.buttonType] || buttonTypeStyles.default
         ]}
         disabled={data.buttonType == CalcButtonType.memoryDisabled}>

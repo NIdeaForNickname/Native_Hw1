@@ -1,19 +1,19 @@
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Home from "../../pages/home/Home";
 import AppStyle from "./AppStyle";
-import { BackHandler, Pressable, Text, View } from "react-native";
+import { BackHandler, Image, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { useEffect, useState } from "react";
 import Calc from "../../pages/calc/Calc";
+import Swipe from "../../pages/swipe/Swipe";
+import IRouteInformation from "../../features/interfaces/IRouteInformation";
+import AppContext from "../../features/context/AppContext";
 
-// /product?id=100500
-interface IRouteInformation {
-    slug: string,          // product
-    parameters?: object     // { "id": 100500 }
-}
+
 
 export default function App() {
     const [history, setHistory] = useState<Array<IRouteInformation>>([]);
     const [page, setPage] = useState<IRouteInformation>({slug: "home"});
+    const {width, height} = useWindowDimensions();
 
     const navigate = (route:IRouteInformation) => {
         console.log(history);
@@ -45,32 +45,50 @@ export default function App() {
         return () => { listener.remove(); };
     }, []);
 
-    return (
-        <SafeAreaProvider>
-            <SafeAreaView edges={['top', 'bottom']} style={AppStyle.container}>
+    return <SafeAreaProvider>
+        <SafeAreaView edges={['top', 'bottom']} style={AppStyle.container}>
 
+            {width < height &&
                 <View style={AppStyle.appBar}>
+                    <TouchableOpacity                         
+                        onPress={() => popRoute()} >
+                            <Text style={AppStyle.appBackIcon}>&lt;</Text>
+                    </TouchableOpacity>
                     <Text style={AppStyle.appBarTitle}>React Native PV-421</Text>
+                    <View />
                 </View>
+            }            
 
+            <AppContext.Provider value={{navigate}}>
                 <View style={AppStyle.main}>
-                    { page.slug == 'home' ? <Home />
-                        : page.slug == 'calc' ? <Calc />
-                            : <Text>404</Text>
-                    }
+                    { page.slug == 'home'  ? <Home />
+                    : page.slug == 'calc'  ? <Calc />
+                    : page.slug == 'swipe' ? <Swipe />
+                    : <Text>404</Text>
+                    }                
                 </View>
+            </AppContext.Provider>
 
-                {/* Updated Navigation Bar */}
+            {width < height &&
                 <View style={AppStyle.navBar}>
-                    <Pressable onPress={() => navigate({slug: "home"})} style={AppStyle.navButton} >
-                        <Text style={AppStyle.navButtonText}>Home</Text>
-                    </Pressable>
-                    <Pressable onPress={() => navigate({slug: "calc"})} style={AppStyle.navButton}>
-                        <Text style={AppStyle.navButtonText}>Calc</Text>
-                    </Pressable>
-                </View>
+                    <TouchableOpacity 
+                        style={{width: 48, height: 48}}
+                        onPress={() => navigate({slug: "home"})}>
+                        <Image 
+                            source={require("../../features/assets/img/home.png")}
+                            style={{width: 24, height: 28, tintColor: "#ddd", marginTop: 16}} />
+                    </TouchableOpacity>
 
-            </SafeAreaView>
-        </SafeAreaProvider>
-    );
+                    <TouchableOpacity 
+                        style={{width: 48, height: 48}}
+                        onPress={() => navigate({slug: "calc"})}>
+                        <Image 
+                            source={require("../../features/assets/img/calc.png")}
+                            style={{width: 28, height: 28, tintColor: "#ddd", marginTop: 16}} />
+                    </TouchableOpacity>
+                </View>
+            }
+            
+        </SafeAreaView>
+    </SafeAreaProvider>;
 }
