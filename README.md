@@ -1,4 +1,5 @@
-<img width="2560" height="1409" alt="image" src="https://github.com/user-attachments/assets/b2c88b1f-516a-4f14-a973-510f5f826dcb" />
+<img width="483" height="957" alt="image" src="https://github.com/user-attachments/assets/bff10095-b09d-4cc2-a201-f54c22610186" />
+<img width="484" height="947" alt="image" src="https://github.com/user-attachments/assets/71514024-a8d4-4c93-a23b-871f8be59841" />
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
